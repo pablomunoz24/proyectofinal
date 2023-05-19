@@ -13,6 +13,8 @@ SOURCES += \
     enemigos.cpp \
     main.cpp \
     mainwindow.cpp \
+    pirata.cpp \
+    player.cpp \
     puntaje.cpp \
     salud.cpp
 
@@ -20,6 +22,8 @@ HEADERS += \
     canon.h \
     enemigos.h \
     mainwindow.h \
+    pirata.h \
+    player.h \
     puntaje.h \
     salud.h
 
@@ -32,4 +36,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    imagenes.qrc
+    Imagenes.qrc

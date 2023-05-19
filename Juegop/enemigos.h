@@ -9,7 +9,7 @@
 #include <QGraphicsPixmapItem>
 #include <QDebug>
 
-class Enemigos: public QGraphicsItem
+class enemigos: public QGraphicsItem
 {
 
     double posx; //posicion en x del enemigo.
@@ -33,8 +33,8 @@ class Enemigos: public QGraphicsItem
     int imagen; //variable para seleccionar imagen
 
 public:
-    Enemigos();
-    Enemigos(double x, double y, double ancho_, double largo_); //sobre carga deconstructor
+    enemigos();
+    enemigos(double x, double y, double ancho_, double largo_); //sobre carga deconstructor
 
     double getPosx(); //funcion para tomar la posicion en x.
     double getPosy(); //funcion para tomar la posicion en y.
@@ -59,4 +59,4 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); //funcion que pinta
 };
 
-#endif // ENEMY_H
+#endif // ENEMIGOS.H

@@ -1,13 +1,15 @@
 <RCC>
+    <qresource prefix="/new/Imagenes para el juego"/>
     <qresource prefix="/">
-        <file>Imagenes para el juego/fondom.jpg</file>
+        <file>Imagenes para el juego/bala.png</file>
         <file>Imagenes para el juego/barco.png</file>
         <file>Imagenes para el juego/fondo1.jpg</file>
         <file>Imagenes para el juego/fondo2.jpg</file>
+        <file>Imagenes para el juego/fondom.jpg</file>
+        <file>Imagenes para el juego/fondom.png</file>
         <file>Imagenes para el juego/images.png</file>
         <file>Imagenes para el juego/kraken.png</file>
         <file>Imagenes para el juego/pirata.png</file>
         <file>Imagenes para el juego/rana.png</file>
-        <file>Imagenes para el juego/fondom.png</file>
     </qresource>
 </RCC>

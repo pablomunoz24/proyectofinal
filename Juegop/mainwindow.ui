@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
-    <height>650</height>
+    <width>1184</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,28 +17,26 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>975</width>
-      <height>615</height>
+      <x>90</x>
+      <y>30</y>
+      <width>1000</width>
+      <height>650</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>520</y>
-      <width>131</width>
-      <height>51</height>
+      <x>370</x>
+      <y>480</y>
+      <width>141</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Viner Hand ITC</family>
-      <pointsize>16</pointsize>
-      <italic>false</italic>
-      <bold>false</bold>
+      <pointsize>18</pointsize>
      </font>
     </property>
     <property name="text">
@@ -48,8 +46,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>510</y>
+      <x>650</x>
+      <y>470</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -70,7 +68,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1050</width>
+     <width>1184</width>
      <height>26</height>
     </rect>
    </property>

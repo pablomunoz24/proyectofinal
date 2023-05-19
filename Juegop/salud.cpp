@@ -1,6 +1,6 @@
 #include "salud.h"
 
-salud::salud()  //constructor
+Salud::Salud()  //constructor
 {
 
     setPlainText(QString("corazones:")+QString::number(corazones)); //texto corazones o  las vidas
@@ -9,7 +9,7 @@ salud::salud()  //constructor
 
 }
 
-void salud::pierdevidas()
+void Salud::muere()
 {
     corazones-=1;  //resto los corazones de vida
     setPlainText(QString("corazones:")+QString::number(corazones)); //actualizo
@@ -19,12 +19,12 @@ void salud::pierdevidas()
     }
 }
 
-int salud::getcorazones()
+int Salud::getcorazones()
 {
     return corazones;
 }
 
-void salud::setcorazones(int _corazones)
+void Salud::setcorazones(int _corazones)
 {
     corazones= _corazones;
     setPlainText(QString("corazones:")+QString::number(corazones));   //actualizar

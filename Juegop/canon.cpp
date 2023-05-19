@@ -14,7 +14,7 @@ void Canon::movimiento()
     QList<QGraphicsItem *> colliding_items = collidingItems(); //lista de colisiones
     for(int i = 0, n = colliding_items.size(); i < n; ++i)//condicion que me pregunta si hubo alguna colision
     {
-        if(typeid(*(colliding_items[i])) == typeid (Enemy))
+        if(typeid(*(colliding_items[i])) == typeid (enemigos))
         {
             scene()->removeItem(colliding_items[i]); //remueve el enemigo
             scene()->removeItem(this); //remueve la bala
@@ -22,7 +22,6 @@ void Canon::movimiento()
             colliding_items[i]->hide();
         }
     }
-    //con esto mi robots dispara
     setPos(x(),y()-20); //establezco la posicion, x() y() son funciones de qQGraphicsItems y
                         //el -20 le da la velocidad a la bala. ya en este punto dispara
     if(pos().y()<-30){ //si se sale de la escena elimine y remueva la bala

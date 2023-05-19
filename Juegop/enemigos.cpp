@@ -1,10 +1,11 @@
 #include "enemigos.h"
-Enemigos::Enemigos()
+
+enemigos::enemigos()
 {
 
 }
 
-Enemigos::Enemigos(double x, double y, double ancho_, double largo_)
+enemigos::enemigos(double x, double y, double ancho_, double largo_)
 {
     largo=largo_; //tomar el largo
     ancho=ancho_; //tomar el ancho
@@ -13,60 +14,60 @@ Enemigos::Enemigos(double x, double y, double ancho_, double largo_)
     setPos(posx,-posy); //dar posicion en x y en y
 }
 
-double Enemigos::getPosx()
+double enemigos::getPosx()
 {
     return posx; //retorna la posicion en x.
 }
 
-double Enemigos::getPosy()
+double enemigos::getPosy()
 {
     return posy; //retorna la posicion en y.
 }
 
-double Enemy::getVelx()
+double enemigos::getVelx()
 {
     return velx; //retorna la velocdiad en x
 }
 
-double Enemy::getVely()
+double enemigos::getVely()
 {
     return vely; //retorna la velocidad en y
 }
 
-void Enemigos::setVelx(double vx_)
+void enemigos::setVelx(double vx_)
 {
     velx=vx_;
 }
 
-void Enemigos::setVely(double vy_)
+void enemigos::setVely(double vy_)
 {
     vely=vy_;
 }
 
-void Enemigos::setVel(double vel_)
+void enemigos::setVel(double vel_)
 {
     vel=vel_; //darle un valor a la velocidad
 }
 
-double Enemigos::getVel()
+double enemigos::getVel()
 {
     return vel; //retorna la velocidad
 }
 
-void Enemigos::setImagen(int imagen_)
+void enemigos::setImagen(int imagen_)
 {
     if(imagen_==1)
     {
-        pixmap = new QPixmap(":/multimedia/fantasma.png");
+        pixmap = new QPixmap(":/Imagenes para el juego/images.png");
     }
     if(imagen_==2)
     {
-        pixmap = new QPixmap(":/multimedia/fantasma2.png");
+        pixmap = new QPixmap(":/Imagenes para el juego/images.png");
     }
 
 }
 
-void Enemigos::MCU(double x, double y, int r_, double W_, double Desfase_)
+void enemigos::MCU(double x, double y, int r_, double W_, double Desfase_)
 {
     W = W_; //velocidad angular
     r=r_; //radio de giro
@@ -76,7 +77,7 @@ void Enemigos::MCU(double x, double y, int r_, double W_, double Desfase_)
     setPos(posx,posy); //dar posicion en x y y
 }
 
-void Enemigos::arriba_abajo(double x, double y, int r_, double W_)
+void enemigos::arriba_abajo(double x, double y, int r_, double W_)
 {
     W = W_; //velocidad angular
     r=r_; //radio de giro
@@ -87,12 +88,12 @@ void Enemigos::arriba_abajo(double x, double y, int r_, double W_)
 }
 
 
-QRectF Enemigos::boundingRect() const
+QRectF enemigos::boundingRect() const
 {
     return QRectF(-ancho/2,-largo/2,ancho,largo); //retorna un rectangulo
 }
 
-void Enemigos::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void enemigos::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(-ancho/2,-largo/2,*pixmap,0,0,ancho,largo);
     Q_UNUSED(option);
