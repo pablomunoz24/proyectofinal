@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
      scene->addItem(corazon);      //le agrego la salud o vida o corazones a la escena
 
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo2.jpg"));
-     puntajee->setPos(920,0);            //establezco donde pondre el puntaje en la escena x:920 y:0  esquina superior derecha
+     puntajee->setPos(850,0);            //establezco donde pondre el puntaje en la escena x:920 y:0  esquina superior derecha
      scene->addItem(puntajee);           //añado el puntaje en la escena
 
      scene->addItem(piratag);  //lo agrego a la escena

@@ -3,7 +3,7 @@
 Canon::Canon(QGraphicsItem *parent)
 {
     Q_UNUSED(parent);
-    setPixmap(QPixmap(":/multimedia/bala.png"));
+    setPixmap(QPixmap(":/Imagenes para el juego/bala.png"));
     timerbala= new QTimer();
     connect(timerbala,SIGNAL(timeout()),this,SLOT(movimiento())); //conectar el timer con la funcion mover de las balas
     timerbala->start(50);   //50 milisegundos

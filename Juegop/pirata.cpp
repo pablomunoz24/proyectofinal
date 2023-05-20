@@ -2,8 +2,8 @@
 
 pirata::pirata()
 {
-    anch=70;    //ancho del robots
-    alt=130;     //alto del robots
+    anch=112;
+    alt=155;
     posicio_x=500;  //posicion en x inicial
     posicio_y=500;  //posicion en y inicial
     velocidd=15;           //velocidad de la nave
