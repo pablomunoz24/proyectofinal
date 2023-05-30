@@ -17,17 +17,23 @@ MainWindow::MainWindow(QWidget *parent)
   scene->setSceneRect(0,0,990,640); // x:0 y:0 ancho:1000 alto:600
   scene->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondom.png")); //fondo del menu principal
   corazon= new Salud(); //creo un objeto de tipo Hearts
-   corazon->setPos(-50,0); //posicion x y pero dentro de la escena
+   corazon->setPos(0,0); //posicion x y pero dentro de la escena
 
    puntajee= new puntaje();   //creo un objeto de tipo Score para el puntaje
 
-   colision_1= new QTimer();
 
    jugador= new player();   //creo un objeto de tipo player llamado jugador
 
-   piratag= new pirata();   //creo un objeto de tipo Robots llamado robots_n2
+   piratag= new pirata(500,500,112,155);   //creo un objeto llamado piratag
+   piratag->setImagen(0);
 
-   timerenemigo_n2= new QTimer();  //creo un objeto de tipo QTimer - tiempo repeticion enemigo nivel 2
+   piso = new pirata(500,575,1000,50); //creo el piso
+   piso->setImagen(1);
+   muroderecho = new pirata(1025,350,50,800); //creo el muro derecho
+   muroizquierdo = new pirata(-25,350,50,800); //creo el muro izquierdo
+
+   timerenemigo_n2= new QTimer;  //creo un objeto de tipo QTimer - tiempo repeticion enemigo nivel 2
+   timerenemigo_n1 = new QTimer; //creo el Qtimer
 
    menuprincipal();   //llamo la funcion menuprincipal
  }
@@ -49,24 +55,23 @@ MainWindow::MainWindow(QWidget *parent)
 
    if(evento->key()==Qt::Key_D){
        this->jugador->mover_derecha();     //nave primer escenario
-       if(nivel==1){                       //robots segundo escenario
+       if(nivel==1 or nivel==2){
        this->piratag->mov_derecha();
        }
    }
 
    if(evento->key()==Qt::Key_A){
        this->jugador->mover_izquierda();      //nave primer escenario
-       if(nivel==1){                         //robots segundo escenario
+       if(nivel==1 or nivel==2){
        this->piratag->mov_izquierda();
        }
    }
 
    if(evento->key()==Qt::Key_Space){
-       if(nivel==1){                             //si estoy en el nivel 2
        bala=new Canon();                       //creo un objeto de tipo bullets
-       bala->setPos(piratag->getpx()+7, piratag->getpy()-85); // bala disparara desde centro del robots. +7 -85 para q dispare del cañon del robot
+       bala->setPos(piratag->getpx()+7, piratag->getpy()-85);
        scene->addItem(bala);                    //agregre la bala a la escena
-       }
+
    }
  }
  void MainWindow::menuprincipal()
@@ -81,10 +86,11 @@ MainWindow::MainWindow(QWidget *parent)
      ui->salir->hide();  //oculto el boton sali
      nivel=1;
      vidas=3;
+     scene->addItem(piso);
      corazon->setcorazones(vidas); //le ingreso que tendra 6 corazones
      scene->addItem(corazon);      //le agrego la salud o vida o corazones a la escena
 
-     ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo2.jpg"));
+     ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo1.jpg"));
      puntajee->setPos(850,0);            //establezco donde pondre el puntaje en la escena x:920 y:0  esquina superior derecha
      scene->addItem(puntajee);           //añado el puntaje en la escena
 
@@ -117,8 +123,62 @@ MainWindow::MainWindow(QWidget *parent)
      connect(timerenemigo_n2,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n2()));
      timerenemigo_n2->start(10);
 
-     connect(definir_n2,SIGNAL(timeout()),this,SLOT(definir_nivel2()));
-     definir_n2->start(500);
+ }
+ void MainWindow::escenario2()
+ {
+     ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo2.jpg"));
+     puntajee->setpuntaje(40); //actualizar puntaje
+     nivel=2;
+
+     timerenemigo_n2->stop();
+     scene->addItem(piso);
+     srand(time(NULL));
+
+     listaenemigos_n2.clear(); //vacias lista de fuerzaaereas
+
+     if(!piratag->isActive()) //condicion que pregunta si el tanque ya esta en escena
+     {
+         scene->addItem(piratag); //agregar la chillin
+     }
+     piratag->setpx(550); //actualizar posicion
+
+
+     if(!corazon->isActive()) //condicion que pregunta si vidas ya esta en escena
+     {
+         scene->addItem(corazon);
+     }
+
+     if(!puntajee->isActive()) //condicion que pregunta si los puntos ya estan en escena
+     {
+         scene->addItem(puntajee);
+     }
+
+
+     //fuerzaaerea 6
+     enemigo5 = new enemigos(25,-150,58,83,10,90); //creo fuerzaaerea 6
+     enemigo5->setImagen(3); //selecionar imagen
+     listaenemigos_n2.push_back(enemigo5); //agrego fuerzaaerea 1 a la lista de fuerzaaereas
+     scene->addItem(listaenemigos_n2.at(0)); //añado fuerzaaerea 1 a la escena
+
+     //fuerzaaerea 7
+     enemigos6 = new enemigos(975,-150,58,83,10,90); //creo fuerzaaerea 7
+     enemigos6->setImagen(3); //seleccionar la imagen
+     listaenemigos_n2.push_back(enemigos6); //agrego fuerzaaerea 6 a la lista de fuerzaaereas
+     scene->addItem(listaenemigos_n2.at(1)); //añado fuerzaaerea 6 a la escena
+
+     //fuerzaaerea 8
+     enemigos7 = new enemigos(250,-350,58,83,10,90); //creo fuerzaaerea 8
+     enemigos7->setImagen(3); //selecionar imagen
+     listaenemigos_n2.push_back(enemigos7); //agrego fuerzaaerea 3 a la lista de fuerzaaereas
+     scene->addItem(listaenemigos_n2.at(2)); //añado fuerzaaerea 3 a la escena
+
+
+     connect(timerenemigo_n1,SIGNAL(timeout()),this,SLOT(mover_enemys_level_1())); //conecto
+     timerenemigo_n1->start(10);
+
+
+     update_score(40); //funcion que detecta que el diparo haya acertado a un fuerzaaerea y actualiza el puntaje
+
  }
 
  void MainWindow::update_score(int s)
@@ -137,6 +197,8 @@ MainWindow::MainWindow(QWidget *parent)
  {
      for(int i=0; i<listaenemigos_n2.size();i++) //ciclo que lee toda la lista de enemigos
      {
+
+
          if(i==0) {
              listaenemigos_n2.at(i)->arriba_abajo(100,200,280,1); //movimiento armonico simple
          }
@@ -155,7 +217,84 @@ MainWindow::MainWindow(QWidget *parent)
 
          update_score(0);    //actualizo puntaje
      }
+     if(puntajee->getpuntaje()==40)
+     {
+         escenario2();
+     }
  }
+ void MainWindow::mover_enemys_level_1()
+ {
+     for(int i=0; i<listaenemigos_n2.size();i++) //ciclo que lee toda la lista de fuerzaaereas
+     {
+
+
+         if(i==0)
+         {
+
+             if(listaenemigos_n2.at(i)->getVel()>70){listaenemigos_n2.at(i)->setVel(70);} //condicion para que no supere cierta velocidad
+             if(listaenemigos_n2.at(i)->getVelx()<45){listaenemigos_n2.at(i)->setVelx(45);} //condicion para que no rebote con una velocidad menor
+         }
+
+         if(i==1)
+         {
+
+             if(listaenemigos_n2.at(i)->getVel()>70){listaenemigos_n2.at(i)->setVel(70);} //condicion para que no supere cierta velocidad
+             if(listaenemigos_n2.at(i)->getVelx()<45){listaenemigos_n2.at(i)->setVelx(45);} //condicion para que no rebote con una velocidad menor
+         }
+
+         if(i==2)
+         {
+
+             if(listaenemigos_n2.at(i)->getVel()>50){listaenemigos_n2.at(i)->setVel(50);} //condicion para que no supere cierta velocidad
+             if(listaenemigos_n2.at(i)->getVelx()<15){listaenemigos_n2.at(i)->setVelx(15);} //condicion para que no rebote con una velocidad menor
+         }
+
+         //mover a la derecha
+         if(listaenemigos_n2.at(i)->getDir()==1) //condicion para preguntar por la direcion
+         {
+
+             listaenemigos_n2.at(i)->actualizarposicion_derecha(); //actualiza la posicion
+             listaenemigos_n2.at(i)->actualizarvelocidad(); //actualiza la velocidad
+             listaenemigos_n2.at(i)->setX(listaenemigos_n2.at(i)->getPosx()); //setea la posicion en x
+             listaenemigos_n2.at(i)->setY(-listaenemigos_n2.at(i)->getPosy());//setea la posicion en y
+         }
+
+
+         //mover a la izquierda
+         if(listaenemigos_n2.at(i)->getDir()==2) //condicion para preguntar la direccion
+         {
+             listaenemigos_n2.at(i)->actualizarposicion_izquierda(); //actualiza la posicion
+             listaenemigos_n2.at(i)->actualizarvelocidad(); //actualiza la velocidad
+             listaenemigos_n2.at(i)->setX(listaenemigos_n2.at(i)->getPosx()); //setea la posicion en x
+             listaenemigos_n2.at(i)->setY(-listaenemigos_n2.at(i)->getPosy());//setea la posicion en y
+         }
+
+         //rebote con el piso
+
+         if(listaenemigos_n2.at(i)->collidesWithItem(piso)) //condicion para preguntar si colisiono con el piso
+         {
+
+
+             listaenemigos_n2.at(i)->rebotepiso(); //aplicar rebote
+         }
+         //rebote con el muro derecho
+         if (listaenemigos_n2.at(i)->collidesWithItem(muroderecho)) //condicion que pregunta si colisiono con el muro derecho
+         {
+
+             listaenemigos_n2.at(i)->setDir(2); //actualizar la direccion de movimiento
+         }
+         //rebote con el muro izquierdo
+         if (listaenemigos_n2.at(i)->collidesWithItem(muroizquierdo)) //condicion que pregunta si colisiono con el muro izquierdo
+         {
+
+             listaenemigos_n2.at(i)->setDir(1);//actualizar la direccion de movimiento
+         }
+
+         colision2(listaenemigos_n2.at(i)); //funcion que detecta el choque y actualiza las vidas
+         update_score(50); //funcion que detecta que el diparo haya acertado a un fuerzaaerea y actualiza el puntaje
+     }
+ }
+
 
  void MainWindow::colision2(enemigos *bol)
  {
@@ -171,6 +310,43 @@ MainWindow::MainWindow(QWidget *parent)
          }
      }
  }
+ void MainWindow::definir_nivel1(){
+
+     msgbox.setWindowTitle("juego terminado");  //titulo de la caja de mensaje
+     msgbox.setIcon(QMessageBox::Information);  //q es una caja de tipo informativa
+     msgbox.setStandardButtons(QMessageBox::Yes); //boton de yes de la caja de meensaje
+     msgbox.addButton(QMessageBox::No);          //agrega el boton no
+     msgbox.setDefaultButton(QMessageBox::Yes);  //boton por defecto sera el yes
+     if (corazon->getcorazones()==0){           //perdio
+         definir_n1->stop();                   //detener el cronometro
+         msgbox.setText("NO ESCAPASTE ! volver a jugar");
+         timerenemigo_n1->stop();                  //detengo el timer que genera las nubes y asteroides
+         if(QMessageBox::Yes==msgbox.exec()){     //si presiona yes para volver a jugar
+             inicializarjuego();
+         }else{                                    //si presiona no
+             QCoreApplication::quit();             //cierra el programa
+         }
+
+     }
+     else{
+
+         if(puntajee->getpuntaje()==70){   //con corazones
+
+             timerenemigo_n1->stop();
+             definir_n1->stop();
+             msgbox.setText("HAS ESCAPADO! volver a jugar");
+             if(QMessageBox::Yes==msgbox.exec()){     //si presiona yes para volver a jugar
+                 inicializarjuego();
+             }
+             else{                                    //si presiona no
+                 QCoreApplication::quit();             //cierra el programa
+             }
+
+
+         }
+     }
+ }
+
 
  void MainWindow::definir_nivel2()
  {
@@ -181,7 +357,7 @@ MainWindow::MainWindow(QWidget *parent)
      msgbox.setDefaultButton(QMessageBox::Yes);  //boton por defecto sera el yes
      if (corazon->getcorazones()==0){           //perdio
          definir_n2->stop();                   //detener el cronometro
-         msgbox.setText("supervivencia fallida! volver a jugar");
+         msgbox.setText("NO ESCAPASTE ! volver a jugar");
          timerenemigo_n2->stop();                  //detengo el timer que genera las nubes y asteroides
          if(QMessageBox::Yes==msgbox.exec()){     //si presiona yes para volver a jugar
              inicializarjuego();
@@ -195,13 +371,7 @@ MainWindow::MainWindow(QWidget *parent)
          if(puntajee->getpuntaje()==40){   //con corazones y cronometro cero gano
 
              timerenemigo_n2->stop();
-             definir_n2->stop();                //detengo el timer que genera las nubes y asteroid
-             msgbox.setText("supervivencia exitosa! volver a jugar");
-             if(QMessageBox::Yes==msgbox.exec()){     //si presiona yes para volver a jugar
-                 inicializarjuego();
-             }else{                                    //si presiona no
-                 QCoreApplication::quit();             //cierra el programa
-             }
+
          }
      }
  }
@@ -231,8 +401,7 @@ MainWindow::MainWindow(QWidget *parent)
      msgbox.addButton(QMessageBox::No);          //agrega el boton no
      msgbox.setDefaultButton(QMessageBox::Yes);  //boton por defecto sera el yes
      if (corazon->getcorazones()==0){           //perdio
-         cronometro->stop();                   //detener el cronometro
-         msgbox.setText("supervivencia fallida! volver a jugar");
+                  msgbox.setText("NO HAS ESCAPADO! volver a jugar");
          if(QMessageBox::Yes==msgbox.exec()){     //si presiona yes para volver a jugar
              inicializarjuego();
          }else{                                    //si presiona no
@@ -246,7 +415,6 @@ MainWindow::MainWindow(QWidget *parent)
  void MainWindow::inicializarjuego()   //inicializar juego si ya habia perdido o ganado
  {
      if(nivel==1){
-     colision_1->stop();
      timerenemigo_n2->stop();
      definir_n2->stop();
      scene->removeItem(listaenemigos_n2.at(0));
@@ -255,8 +423,18 @@ MainWindow::MainWindow(QWidget *parent)
      scene->removeItem(listaenemigos_n2.at(3));
      scene->removeItem(piratag);
      }
+     if(nivel==2){
+         timerenemigo_n1->stop();
+         definir_n1->stop();
+         scene->removeItem(listaenemigos_n2.at(0));
+         scene->removeItem(listaenemigos_n2.at(1));
+         scene->removeItem(listaenemigos_n2.at(2));
+         scene->removeItem(listaenemigos_n2.at(3));
+         scene->removeItem(piratag);
+         }
+
+
      puntajee->setpuntaje(0);
-     cronometr.setHMS(0,0,20);
      escenario1();
  }
 

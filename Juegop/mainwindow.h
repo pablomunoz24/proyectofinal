@@ -44,10 +44,8 @@ public:
 
 
 
-    QTimer *cronometro= new QTimer();  // no maneja el cronometro - repite una accion cada determinado tiempo - despues de determinado tiempo suceda esto
-    QTime cronometr;                   // no maneja la hora  -- relog -representa los minutos q se mostraran
-
     QTimer *definir_n2= new QTimer(); // no timer q revisara si perdio o gano
+    QTimer *definir_n1= new QTimer();
 
 
 
@@ -64,9 +62,16 @@ private:
     enemigos *enemigo3;
     enemigos *enemigo4;
     enemigos *enemigo5;
+    enemigos *enemigos6;
+    enemigos *enemigos7;
 
     QList<enemigos*> listaenemigos_n2; //lista de enemigos nivel 2
-    QTimer *timerenemigo_n2;           //timer de los enemigos nivel 2
+    QTimer *timerenemigo_n2;//timer de los enemigos nivel 2
+    QTimer *timerenemigo_n1;
+    //entorno
+    pirata *piso; // piso
+    pirata *muroderecho; //muro derecho
+    pirata *muroizquierdo; //muro izquierdo
 
     void update_score(int s);
 private slots:
@@ -77,12 +82,13 @@ private slots:
     void inicializarjuego();
 
 
-
+    void mover_enemys_level_1();
     void movimiento_enemigos_n2();      //movimiento de los enegimos nivel 2
 
     void colision2(enemigos* bol);  //colision enemigos nivel 2
 
     void definir_nivel2();
+    void definir_nivel1();
 
 };
 

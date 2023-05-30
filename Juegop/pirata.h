@@ -10,9 +10,15 @@
 
 class pirata:public QObject, public QGraphicsItem
 {
+    double posicio_x;
+    double posicio_y;
+    double alt;
+    double anch;
+    double velocidd=15;
+    QPixmap *pixmap; //variable pixap
 public:
     pirata();
-    ~pirata();
+    pirata(double x, double y, double ancho_, double largo_); //sobre carga del constructor
     void mov_izquierda();
     void mov_derecha();
 
@@ -24,17 +30,15 @@ public:
 
         void setpx(double x);
         void setpy(double y);
+        void setImagen(int i); //escoger la imagen
+
 
     private:
-        double posicio_x;
-        double posicio_y;
-        double alt;
-        double anch;
+
 
         void actualizr_posicion();
 
-        double velocidd;   //velocidad del robots
-        QPixmap *im_pirata;   //robot
+
 
 };
 
