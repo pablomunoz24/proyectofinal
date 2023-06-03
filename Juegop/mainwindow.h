@@ -16,7 +16,7 @@
 #include <QDebug>
 #include <iostream>
 #include <canon.h>
-#include <enemigos.h>
+#include "enemigos.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,13 +42,7 @@ public:
     void escenario2();
     void escenario3();
 
-
-
-    QTimer *definir_n2= new QTimer(); // no timer q revisara si perdio o gano
     QTimer *definir_n1= new QTimer();
-
-
-
 private:
     Ui::MainWindow *ui;
 
@@ -56,7 +50,7 @@ private:
     puntaje *puntajee;   //establezco el puntaje
     QTimer *colision_1;
 
-
+     bool juego;
     enemigos *enemigo1; //enemigos del nivel 2
     enemigos *enemigo2;
     enemigos *enemigo3;
@@ -68,26 +62,28 @@ private:
     QList<enemigos*> listaenemigos_n2; //lista de enemigos nivel 2
     QTimer *timerenemigo_n2;//timer de los enemigos nivel 2
     QTimer *timerenemigo_n1;
+    QTimer *timerenemigo_n3;
     //entorno
     pirata *piso; // piso
     pirata *muroderecho; //muro derecho
     pirata *muroizquierdo; //muro izquierdo
 
     void update_score(int s);
+    void victoria();
 private slots:
-    void mover_scenas();       //funcion propia de qt q hace q se mueva los objetos
     void on_play_clicked();   //boton jugar
     void on_salir_clicked();   //boton salir
-    void definir_resultado();           //denife si perdio o gano en el tiempo estipulado
+
     void inicializarjuego();
 
 
-    void mover_enemys_level_1();
+
     void movimiento_enemigos_n2();      //movimiento de los enegimos nivel 2
+    void movimiento_enemigos_n1();
+     void movimiento_enemigos_n3();
 
     void colision2(enemigos* bol);  //colision enemigos nivel 2
 
-    void definir_nivel2();
     void definir_nivel1();
 
 };

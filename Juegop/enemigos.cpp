@@ -34,15 +34,6 @@ double enemigos::getPosy()
 {
     return posy; //retorna la posicion en y.
 }
-double enemigos::getAngulo()
-{
-    return angulo*180/pi;
-}
-
-void enemigos::setAngulo(double angulo_)
-{
-    angulo=(angulo_/180)*pi; //darle un valor al angulo
-}
 
 double enemigos::getVelx()
 {
@@ -110,8 +101,18 @@ void enemigos::arriba_abajo(double x, double y, int r_, double W_)
     W = W_; //velocidad angular
     r=r_; //radio de giro
     i=i+Rad; //angulo de giro
-    posx =x; //posicion en x
+    posx =x; //posicion en
     posy =y+r*cos(i*W); //posicion en y, movimimient pendular
+    setPos(posx,posy); //dar posicion en x y y
+
+}
+void enemigos::movimiento_triangular(double x, double y, int r_, double W_)
+{
+    W = W_; //velocidad angular
+    r=r_; //radio de giro
+    i=i+Rad; //angulo de giro
+    posx =x+r*cos(i*W); //posicion en
+    posy =y+r*cos(i*W); //posicion en y, movimimient
     setPos(posx,posy); //dar posicion en x y y
 }
 void enemigos::rebotepiso()

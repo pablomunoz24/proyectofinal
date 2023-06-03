@@ -59,7 +59,7 @@ void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 {
     painter->drawPixmap(-this->ancho/2,-this->alto/2,*imagen_personaje,0,0,this->ancho,this->alto); //pinta la nave y da la imagen
     this->update();                               //llama la funcion actualizar
-    Q_UNUSED(widget); //que no se van a usar
+    Q_UNUSED(widget);
     Q_UNUSED(option);
 }
 
