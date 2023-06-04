@@ -29,27 +29,17 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void keyPressEvent(QKeyEvent *evento);
 
-    QGraphicsScene *scene;
-    player *jugador;       //nave  terceer nivel
-    pirata *piratag;       //robots del primer y segundo
-    Canon *bala;           //bala
-    QMessageBox msgbox;   //caja de mensajes
 
-    void menuprincipal();
-    void escenario1();
-    void escenario2();
-    void escenario3();
-
-    QTimer *definir_n1= new QTimer();
 private:
     Ui::MainWindow *ui;
 
     Salud *corazon;  //establezco la vida
     puntaje *puntajee;   //establezco el puntaje
     QTimer *colision_1;
+    QTimer *definir_n1= new QTimer();
 
+    void keyPressEvent(QKeyEvent *evento);
      bool juego;
     enemigos *enemigo1; //enemigos del nivel 2
     enemigos *enemigo2;
@@ -58,6 +48,9 @@ private:
     enemigos *enemigo5;
     enemigos *enemigos6;
     enemigos *enemigos7;
+    enemigos *enemigo8;
+    enemigos *enemigo9;
+    enemigos *enemigo10;
 
     QList<enemigos*> listaenemigos_n2; //lista de enemigos nivel 2
     QTimer *timerenemigo_n2;//timer de los enemigos nivel 2
@@ -68,6 +61,16 @@ private:
     pirata *muroderecho; //muro derecho
     pirata *muroizquierdo; //muro izquierdo
 
+    QGraphicsScene *scene;
+    pirata *nave;       //nave  terceer nivel
+    pirata *piratag;       //robots del primer y segundo
+    Canon *bala;           //bala
+    QMessageBox msgbox;   //caja de mensajes
+
+    void menuprincipal();
+    void escenario1();
+    void escenario2();
+    void escenario3();
     void update_score(int s);
     void victoria();
 private slots:

@@ -78,6 +78,9 @@ void enemigos::setImagen(int imagen_)
     if(imagen_==3){
         pixmap = new QPixmap(":/Imagenes para el juego/rana.png");
     }
+    if(imagen_ ==4){
+        pixmap=new QPixmap(":/Imagenes para el juego/kraken.png");
+    }
 
 }
 void enemigos::actualizarposicion_derecha()
@@ -154,6 +157,5 @@ QRectF enemigos::boundingRect() const
 void enemigos::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(-ancho/2,-largo/2,*pixmap,0,0,ancho,largo);
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
+
 }

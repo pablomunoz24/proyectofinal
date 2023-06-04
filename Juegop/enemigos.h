@@ -24,7 +24,6 @@ class enemigos: public QGraphicsItem
     double pi=3.1416; //pi
     double angulo; //angulo
     int dir;
-    int cto;
     int r; //radio para el MCU
     double Rad= 0.0174533; //radianes
     double i; // variable para variar los radianes
@@ -61,6 +60,7 @@ public:
     void MCU(double x, double y, int r_, double W_, double Desfase_); //movimentiento circular uniforme
     void arriba_abajo(double x, double y, int r_, double W_);         //movimiento armonico simple
     void movimiento_triangular(double x, double y, int r_, double W_);
+
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -21,19 +21,20 @@ MainWindow::MainWindow(QWidget *parent)
 
    puntajee= new puntaje();   //creo un objeto de tipo Score para el puntaje
 
-
-   jugador= new player();   //creo un objeto de tipo player llamado jugador
-
    piratag= new pirata(500,500,112,155);   //creo un objeto llamado piratag
    piratag->setImagen(0);
 
+   nave=new pirata(10,500,248,165);
+   nave->setImagen(3);
+
    piso = new pirata(500,575,1000,50); //creo el piso
-   piso->setImagen(1);
+   piso->setImagen(2);
    muroderecho = new pirata(1025,350,50,800); //creo el muro derecho
    muroizquierdo = new pirata(-25,350,50,800); //creo el muro izquierdo
 
    timerenemigo_n2= new QTimer;
    timerenemigo_n1 = new QTimer;
+   timerenemigo_n3= new QTimer;
 
    menuprincipal();   //llamo la funcion menuprincipal
  }
@@ -45,42 +46,61 @@ MainWindow::MainWindow(QWidget *parent)
 
  void MainWindow::keyPressEvent(QKeyEvent *evento)  //al presionar el teclado
  {
-  if(juego){
    if(evento->key()==Qt::Key_W){
-       this->jugador->mover_arriba();         //nave primer escenario
+       this->nave->mov_arriba();
    }
 
    if(evento->key()==Qt::Key_S){
-       this->jugador->mover_abajo();          //nave primer escenario
+       this->nave->mov_abajo();
    }
 
    if(evento->key()==Qt::Key_D){
-       this->jugador->mover_derecha();     //nave primer escenario
+       if(nivel==3){
+       this->nave->mov_derecha();
+       }
        if(nivel==1 or nivel==2){
+       piratag->setImagen(0);
        this->piratag->mov_derecha();
        }
    }
 
    if(evento->key()==Qt::Key_A){
-       this->jugador->mover_izquierda();      //nave primer escenario
+       if(nivel==3){
+       this->nave->mov_izquierda();
+       }
        if(nivel==1 or nivel==2){
+        piratag->setImagen(1);
        this->piratag->mov_izquierda();
        }
    }
 
    if(evento->key()==Qt::Key_Space){
        bala=new Canon();                       //creo un objeto de tipo bullets
-       bala->setPos(piratag->getpx()+7, piratag->getpy()-85);
-       scene->addItem(bala);                    //agregre la bala a la escena
+       if(piratag->getImagen()==0){
+       bala->setPos(piratag->getpx()+50, piratag->getpy()-85);
+       scene->addItem(bala);                    //agregre la bala a la escen
+       }
+       if(piratag->getImagen()==1){
+           bala->setPos(piratag->getpx()-50, piratag->getpy()-85);
+           scene->addItem(bala);                    //agregre la bala a la escen
+
+       }
+       if(nivel==3){
+           bala->setPos(nave->getpx()-20,nave->getpy()-85);
+       }
+       if(puntajee->getpuntaje()==100 || corazon->getcorazones()==0){
+           bala->hide();
+       }
 
    }
   }
- }
  void MainWindow::menuprincipal()
  {
       juego=false;
       ui->play->show();
       ui->salir->show();
+      timerenemigo_n2->stop();
+      timerenemigo_n1->stop();
 
  }
  void MainWindow::escenario1()
@@ -134,8 +154,9 @@ MainWindow::MainWindow(QWidget *parent)
  {
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo2.jpg"));
      puntajee->setpuntaje(40); //actualizar puntaje
+     srand(time(NULL));
      nivel=2;
-     juego=true;
+
 
      timerenemigo_n2->stop();
      scene->addItem(piso);
@@ -177,17 +198,61 @@ MainWindow::MainWindow(QWidget *parent)
      enemigos7->setImagen(3); //selecionar imagen
      listaenemigos_n2.push_back(enemigos7);
      scene->addItem(listaenemigos_n2.at(2));
+      definir_n1->start(500);
 
-
-     connect(timerenemigo_n1,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n2())); //conecto
      timerenemigo_n1->start(10);
+     connect(timerenemigo_n1,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n2())); //conecto
+
      connect(definir_n1,SIGNAL(timeout()),this,SLOT(definir_nivel1()));
-     definir_n1->start(50);
+
 
 
 
      update_score(40); //
 
+
+
+ }
+ void MainWindow::escenario3()
+ {
+     ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/mar.png"));
+     puntajee->setpuntaje(70); //actualizar puntaje
+     srand(time(NULL));
+     nivel=3;
+     timerenemigo_n1->stop();
+     piratag->hide();
+     piso->hide();
+     scene->addItem(nave);
+     listaenemigos_n2.clear();
+     if(!corazon->isActive()) //condicion que pregunta si vidas ya esta en escena
+     {
+         scene->addItem(corazon);
+     }
+
+     if(!puntajee->isActive()) //condicion que pregunta si los puntos ya estan en escena
+     {
+         scene->addItem(puntajee);
+     }
+
+     enemigo8 = new enemigos(150,-500,105,105); //creo enemigo 1 - x y ancho:135 la imagen tiene mas ancho del fantasma -  alto
+     enemigo8->setImagen(4);                    //selecionar imagen
+     listaenemigos_n2.push_back(enemigo8); //agrego enemigo 1 a la lista
+     scene->addItem(listaenemigos_n2.at(0)); //añado enemigo 1 a la escena
+
+     enemigo9 = new enemigos(850,-500,105,105); //creo enemigo 2
+     enemigo9->setImagen(4);
+     listaenemigos_n2.push_back(enemigo9);
+     scene->addItem(listaenemigos_n2.at(1));
+
+     enemigo10 = new enemigos(500,-350,105,105);
+     enemigo10->setImagen(4);
+     listaenemigos_n2.push_back(enemigo10);
+     scene->addItem(listaenemigos_n2.at(2));
+
+
+     connect(timerenemigo_n3,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n3()));
+     timerenemigo_n3->start(10);
+     connect(definir_n1,SIGNAL(timeout()),this,SLOT(definir_nivel1()));
 
 
  }
@@ -230,6 +295,7 @@ MainWindow::MainWindow(QWidget *parent)
      }
      if(puntajee->getpuntaje()==40)
      {
+
          escenario2();
      }
  }
@@ -302,10 +368,11 @@ MainWindow::MainWindow(QWidget *parent)
 
          colision2(listaenemigos_n2.at(i)); //funcion que detecta el choque y actualiza las vidas
          update_score(40); //funcion que detecta que el diparo haya acertado a un fuerzaaerea y actualiza el puntaje
-         if(puntajee->getpuntaje()==70)
-         {
-             victoria();
-         }
+     }
+     if(puntajee->getpuntaje()==70)
+     {
+
+         escenario3();
      }
  }
  void MainWindow::movimiento_enemigos_n3()
@@ -326,62 +393,77 @@ MainWindow::MainWindow(QWidget *parent)
 
          colision2(listaenemigos_n2.at(i)); //funcion que detecta el choque y actualiza las vidas
 
-         update_score(0);    //actualizo puntaje
+         update_score(70);    //actualizo puntaje
      }
-     if(puntajee->getpuntaje()==40)
-     {
-         escenario2();
-     }
- }
-
+}
 
  void MainWindow::colision2(enemigos *bol)
  {
+     if(nivel==1 || nivel==2){
 
      if(piratag->collidesWithItem(bol)&&bol->isVisible()){ //pregunta q si hubo colision con un enemigo visible
           corazon->muere(); //disminuye las vidas
 
          if(corazon->getcorazones()==2){
+
+
              piratag->setpx(500);
+
          }
          if(corazon->getcorazones()==1){
+
              piratag->setpx(500);
+
          }
      }
+    }
+  if(nivel==3){
+      if(nave->collidesWithItem(bol)&&bol->isVisible()){ //pregunta q si hubo colision con un enemigo visible
+           corazon->muere(); //disminuye las vidas
+
+          if(corazon->getcorazones()==2){
+                nave->setpx(10);
+          }
+          if(corazon->getcorazones()==1){
+                nave->setpx(10);
+          }
+      }
+
+  }
+
  }
  void MainWindow::definir_nivel1()
  {
      if (corazon->getcorazones()==0){           //perdio
-         definir_n1->stop();
-         timerenemigo_n2->stop();
          piratag->hide();
          piso->hide();
          corazon->hide();
-         delete enemigo1;
-         delete enemigo2;
-         delete enemigo3;
-         delete enemigo4;
-         delete enemigo5;
-         delete enemigos6;
-         delete enemigos7;
+         nave->hide();
+         for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
+         {
+             if(listaenemigos_n2.at(i)->isVisible()) //condicion que pregunta si un fuerzaaerea es visible
+             {
+                 scene->removeItem(listaenemigos_n2.at(i)); //remueve los fuerzaaereas visibles
+             }
+         }
+
          ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/badend.jpg"));
      }
-     else{
 
-         if(puntajee->getpuntaje()==70){
-             timerenemigo_n1->stop();
-             definir_n1->stop();
+      else if(puntajee->getpuntaje()==100){
              piratag->hide();
-             piso->hide();
+             nave->hide();
              corazon->hide();
-             delete enemigo1;
-             delete enemigo2;
-             delete enemigo3;
-             delete enemigo4;
-             delete enemigo5;
-             delete enemigos6;
-             ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/badend.jpg"));
-         }
+             for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
+             {
+                 if(listaenemigos_n2.at(i)->isVisible()) //condicion que pregunta si un fuerzaaerea es visible
+                 {
+                     scene->removeItem(listaenemigos_n2.at(i)); //remueve los fuerzaaereas visibles
+                 }
+             }
+
+             ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/godendi.png"));
+
        }
      }
 

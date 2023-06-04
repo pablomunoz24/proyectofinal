@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="play">
     <property name="geometry">
      <rect>
       <x>370</x>
@@ -43,7 +43,7 @@
      <string>Play</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="salir">
     <property name="geometry">
      <rect>
       <x>650</x>

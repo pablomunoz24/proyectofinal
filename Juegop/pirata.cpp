@@ -20,16 +20,28 @@ void pirata::mov_izquierda()
         actualizr_posicion();
     }
 }
-void pirata::setImagen(int i)
+int pirata::getImagen()
+{
+    return i;
+}
+void pirata::setImagen(int _i)
 {
     // actualizar la imagen
+    i=_i;
     if(i==0)
     {
         pixmap = new QPixmap(":/Imagenes para el juego/pirata.png");
     }
     if(i==1)
     {
+        pixmap=new QPixmap(":/Imagenes para el juego/pirata2.png");
+    }
+    if(i==2)
+    {
         pixmap = new QPixmap(":/Imagenes para el juego/pngegg.png");
+    }
+    if(i==3){
+        pixmap= new QPixmap(":/Imagenes para el juego/barco.png");
     }
 }
 
@@ -37,6 +49,20 @@ void pirata::mov_derecha()
 {
     if ((posicio_x + velocidd)<1020){
         posicio_x+=velocidd;
+        actualizr_posicion();
+    }
+}
+void pirata::mov_abajo()
+{
+    if((posicio_y + velocidd<625)){
+        posicio_y+=velocidd;
+        actualizr_posicion();
+    }
+}
+void pirata::mov_arriba()
+{
+    if ((posicio_y - velocidd)>-8){
+        posicio_y-=velocidd;
         actualizr_posicion();
     }
 }
