@@ -16,8 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene); //establezco la escena
   scene->setSceneRect(0,0,990,640);
   scene->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondom.png")); //fondo del menu principal
+  coraim=new pirata(28,36,50,50);
+  coraim->setImagen(4);
   corazon= new Salud(); //creo un objeto de tipo Hearts
-   corazon->setPos(0,0); //posicion x y pero dentro de la escena
+   corazon->setPos(53,16); //posicion x y pero dentro de la escena
 
    puntajee= new puntaje();   //creo un objeto de tipo Score para el puntaje
 
@@ -113,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent)
      scene->addItem(piso);
      corazon->setcorazones(vidas); //le ingreso que tendra 6 corazones
      scene->addItem(corazon);      //le agrego la salud o vida o corazones a la escena
-
+     scene->addItem(coraim);
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo1.jpg"));
      puntajee->setPos(850,0);            //establezco donde pondre el puntaje en la escena x:920 y:0  esquina superior derecha
      scene->addItem(puntajee);           //añado el puntaje en la escena
@@ -154,7 +156,6 @@ MainWindow::MainWindow(QWidget *parent)
  {
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo2.jpg"));
      puntajee->setpuntaje(40); //actualizar puntaje
-     srand(time(NULL));
      nivel=2;
 
 
@@ -217,7 +218,6 @@ MainWindow::MainWindow(QWidget *parent)
  {
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/mar.png"));
      puntajee->setpuntaje(70); //actualizar puntaje
-     srand(time(NULL));
      nivel=3;
      timerenemigo_n1->stop();
      piratag->hide();
@@ -438,6 +438,7 @@ MainWindow::MainWindow(QWidget *parent)
          piratag->hide();
          piso->hide();
          corazon->hide();
+         coraim->hide();
          nave->hide();
          for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
          {
@@ -453,6 +454,7 @@ MainWindow::MainWindow(QWidget *parent)
       else if(puntajee->getpuntaje()==100){
              piratag->hide();
              nave->hide();
+             coraim->hide();
              corazon->hide();
              for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
              {
@@ -461,6 +463,7 @@ MainWindow::MainWindow(QWidget *parent)
                      scene->removeItem(listaenemigos_n2.at(i)); //remueve los fuerzaaereas visibles
                  }
              }
+
 
              ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/godendi.png"));
 

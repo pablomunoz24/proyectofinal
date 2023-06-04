@@ -43,6 +43,10 @@ void pirata::setImagen(int _i)
     if(i==3){
         pixmap= new QPixmap(":/Imagenes para el juego/barco.png");
     }
+    if(i==4){
+        pixmap= new QPixmap(":/Imagenes para el juego/corazon.png");
+
+    }
 }
 
 void pirata::mov_derecha()

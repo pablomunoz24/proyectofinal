@@ -62,6 +62,7 @@ private:
     pirata *muroizquierdo; //muro izquierdo
 
     QGraphicsScene *scene;
+    pirata *coraim;
     pirata *nave;       //nave  terceer nivel
     pirata *piratag;       //robots del primer y segundo
     Canon *bala;           //bala
