@@ -1,21 +1,20 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMediaPlayer>
 #include "salud.h"
 #include "puntaje.h"
 #include "pirata.h"
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QKeyEvent>
-#include <player.h>
 #include <QTimer>
 #include <QTime>
-#include <QMessageBox>
 #include <QList>
 #include <QGraphicsItem>
 #include <QDebug>
 #include <iostream>
-#include <canon.h>
+#include "canon.h"
 #include "enemigos.h"
 
 QT_BEGIN_NAMESPACE
@@ -41,7 +40,7 @@ private:
 
     void keyPressEvent(QKeyEvent *evento);
      bool juego;
-    enemigos *enemigo1; //enemigos del nivel 2
+    enemigos *enemigo1;
     enemigos *enemigo2;
     enemigos *enemigo3;
     enemigos *enemigo4;
@@ -52,7 +51,7 @@ private:
     enemigos *enemigo9;
     enemigos *enemigo10;
 
-    QList<enemigos*> listaenemigos_n2; //lista de enemigos nivel 2
+    QList<enemigos*> listaenemigos_n2;
     QTimer *timerenemigo_n2;//timer de los enemigos nivel 2
     QTimer *timerenemigo_n1;
     QTimer *timerenemigo_n3;
@@ -63,10 +62,11 @@ private:
 
     QGraphicsScene *scene;
     pirata *coraim;
-    pirata *nave;       //nave  terceer nivel
-    pirata *piratag;       //robots del primer y segundo
-    Canon *bala;           //bala
-    QMessageBox msgbox;   //caja de mensajes
+    pirata *nave;
+    pirata *piratag;
+    Canon *bala;
+    QMediaPlayer *musica;
+
 
     void menuprincipal();
     void escenario1();
@@ -82,11 +82,11 @@ private slots:
 
 
 
-    void movimiento_enemigos_n2();      //movimiento de los enegimos nivel 2
+    void movimiento_enemigos_n2();
     void movimiento_enemigos_n1();
      void movimiento_enemigos_n3();
 
-    void colision2(enemigos* bol);  //colision enemigos nivel 2
+    void colision2(enemigos* bol);
 
     void definir_nivel1();
 

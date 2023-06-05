@@ -1,4 +1,5 @@
 QT       += core gui
+QT       +=multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,7 +15,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     pirata.cpp \
-    player.cpp \
     puntaje.cpp \
     salud.cpp
 
@@ -23,7 +23,6 @@ HEADERS += \
     enemigos.h \
     mainwindow.h \
     pirata.h \
-    player.h \
     puntaje.h \
     salud.h
 
@@ -37,3 +36,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Imagenes.qrc
+
+DISTFILES += \
+    Musica para el juego/y2mate.com - Bonus Game Win  Donkey Kong Country OST.mp3 \
+    Musica para el juego/y2mate.com - Donkey Kong Country  Game Over Restored.mp3 \
+    Musica para el juego/y2mate.com - Donkey Kong Country OST Super Nintendo  Track 0123  Theme.mp3 \
+    Musica para el juego/y2mate.com - Gangplank Galleon Restored to HD.mp3

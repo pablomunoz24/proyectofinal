@@ -18,4 +18,10 @@
         <file>Imagenes para el juego/pirata2.png</file>
         <file>Imagenes para el juego/corazon.png</file>
     </qresource>
+    <qresource prefix="/n">
+        <file>Musica para el juego/y2mate.com - Donkey Kong Country  Game Over Restored.mp3</file>
+        <file>Musica para el juego/y2mate.com - Bonus Game Win  Donkey Kong Country OST.mp3</file>
+        <file>Musica para el juego/y2mate.com - Donkey Kong Country OST Super Nintendo  Track 0123  Theme.mp3</file>
+        <file>Musica para el juego/y2mate.com - Gangplank Galleon Restored to HD.mp3</file>
+    </qresource>
 </RCC>

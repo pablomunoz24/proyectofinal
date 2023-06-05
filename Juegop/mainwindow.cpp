@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
    timerenemigo_n1 = new QTimer;
    timerenemigo_n3= new QTimer;
 
+   musica=new QMediaPlayer;
+
    menuprincipal();   //llamo la funcion menuprincipal
  }
 
@@ -77,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
    }
 
    if(evento->key()==Qt::Key_Space){
-       bala=new Canon();                       //creo un objeto de tipo bullets
+       bala=new Canon();                       //creo un objeto de tipo canon
        if(piratag->getImagen()==0){
        bala->setPos(piratag->getpx()+50, piratag->getpy()-85);
        scene->addItem(bala);                    //agregre la bala a la escen
@@ -99,10 +101,13 @@ MainWindow::MainWindow(QWidget *parent)
  void MainWindow::menuprincipal()
  {
       juego=false;
+
       ui->play->show();
       ui->salir->show();
       timerenemigo_n2->stop();
       timerenemigo_n1->stop();
+      musica->setMedia(QUrl("qrc:/n/Musica para el juego/y2mate.com - Gangplank Galleon Restored to HD.mp3"));
+      musica->play();
 
  }
  void MainWindow::escenario1()
@@ -113,11 +118,11 @@ MainWindow::MainWindow(QWidget *parent)
      vidas=3;
      juego=true;
      scene->addItem(piso);
-     corazon->setcorazones(vidas); //le ingreso que tendra 6 corazones
+     corazon->setcorazones(vidas);
      scene->addItem(corazon);      //le agrego la salud o vida o corazones a la escena
      scene->addItem(coraim);
      ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/fondo1.jpg"));
-     puntajee->setPos(850,0);            //establezco donde pondre el puntaje en la escena x:920 y:0  esquina superior derecha
+     puntajee->setPos(850,0);
      scene->addItem(puntajee);           //añado el puntaje en la escena
 
      scene->addItem(piratag);  //lo agrego a la escena
@@ -126,7 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
 
       corazon->setcorazones(3);
 
-     enemigo1 = new enemigos(150,-500,105,94); //creo enemigo 1 - x y ancho:135 la imagen tiene mas ancho del fantasma -  alto
+     enemigo1 = new enemigos(150,-500,105,94);
      enemigo1->setImagen(1);                    //selecionar imagen
      listaenemigos_n2.push_back(enemigo1); //agrego enemigo 1 a la lista
      scene->addItem(listaenemigos_n2.at(0)); //añado enemigo 1 a la escena
@@ -162,21 +167,21 @@ MainWindow::MainWindow(QWidget *parent)
      timerenemigo_n2->stop();
      scene->addItem(piso);
 
-     listaenemigos_n2.clear(); //vacias lista de fuerzaaereas
+     listaenemigos_n2.clear();
 
-     if(!piratag->isActive()) //condicion que pregunta si el tanque ya esta en escena
+     if(!piratag->isActive())
      {
-         scene->addItem(piratag); //agregar la chillin
+         scene->addItem(piratag);
      }
      piratag->setpx(10); //actualizar posicion
 
 
-     if(!corazon->isActive()) //condicion que pregunta si vidas ya esta en escena
+     if(!corazon->isActive())
      {
          scene->addItem(corazon);
      }
 
-     if(!puntajee->isActive()) //condicion que pregunta si los puntos ya estan en escena
+     if(!puntajee->isActive())
      {
          scene->addItem(puntajee);
      }
@@ -186,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent)
      enemigo5 = new enemigos(25,-150,70,51,10,90);
      enemigo5->setImagen(3);
      listaenemigos_n2.push_back(enemigo5); //
-     scene->addItem(listaenemigos_n2.at(0)); //añado fuerzaaerea 1 a la escena
+     scene->addItem(listaenemigos_n2.at(0));
 
      //fuerzaaerea 7
      enemigos6 = new enemigos(975,-150,70,51,10,90);
@@ -199,12 +204,13 @@ MainWindow::MainWindow(QWidget *parent)
      enemigos7->setImagen(3); //selecionar imagen
      listaenemigos_n2.push_back(enemigos7);
      scene->addItem(listaenemigos_n2.at(2));
-      definir_n1->start(500);
 
-     timerenemigo_n1->start(10);
+
+
      connect(timerenemigo_n1,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n2())); //conecto
-
+     timerenemigo_n1->start(10);
      connect(definir_n1,SIGNAL(timeout()),this,SLOT(definir_nivel1()));
+     definir_n1->start(50);
 
 
 
@@ -234,12 +240,12 @@ MainWindow::MainWindow(QWidget *parent)
          scene->addItem(puntajee);
      }
 
-     enemigo8 = new enemigos(150,-500,105,105); //creo enemigo 1 - x y ancho:135 la imagen tiene mas ancho del fantasma -  alto
+     enemigo8 = new enemigos(150,-500,105,105);
      enemigo8->setImagen(4);                    //selecionar imagen
-     listaenemigos_n2.push_back(enemigo8); //agrego enemigo 1 a la lista
-     scene->addItem(listaenemigos_n2.at(0)); //añado enemigo 1 a la escena
+     listaenemigos_n2.push_back(enemigo8);
+     scene->addItem(listaenemigos_n2.at(0));
 
-     enemigo9 = new enemigos(850,-500,105,105); //creo enemigo 2
+     enemigo9 = new enemigos(850,-500,105,105);
      enemigo9->setImagen(4);
      listaenemigos_n2.push_back(enemigo9);
      scene->addItem(listaenemigos_n2.at(1));
@@ -253,6 +259,7 @@ MainWindow::MainWindow(QWidget *parent)
      connect(timerenemigo_n3,SIGNAL(timeout()),this,SLOT(movimiento_enemigos_n3()));
      timerenemigo_n3->start(10);
      connect(definir_n1,SIGNAL(timeout()),this,SLOT(definir_nivel1()));
+     definir_n1->start(50);
 
 
  }
@@ -366,8 +373,8 @@ MainWindow::MainWindow(QWidget *parent)
              listaenemigos_n2.at(i)->setDir(1);//actualizar la direccion de movimiento
          }
 
-         colision2(listaenemigos_n2.at(i)); //funcion que detecta el choque y actualiza las vidas
-         update_score(40); //funcion que detecta que el diparo haya acertado a un fuerzaaerea y actualiza el puntaje
+         colision2(listaenemigos_n2.at(i));
+         update_score(40);
      }
      if(puntajee->getpuntaje()==70)
      {
@@ -440,13 +447,20 @@ MainWindow::MainWindow(QWidget *parent)
          corazon->hide();
          coraim->hide();
          nave->hide();
-         for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
+
+         for(int i=0;i<listaenemigos_n2.size();i++)
          {
-             if(listaenemigos_n2.at(i)->isVisible()) //condicion que pregunta si un fuerzaaerea es visible
+             if(listaenemigos_n2.at(i)->isVisible())
              {
-                 scene->removeItem(listaenemigos_n2.at(i)); //remueve los fuerzaaereas visibles
+                 scene->removeItem(listaenemigos_n2.at(i));
              }
          }
+         /*musica->stop();
+         musica->setMedia(QUrl("qrc:/n/Musica para el juego/y2mate.com - Bonus Game Win  Donkey Kong Country OST.mp3"));
+         musica->play();
+         */
+
+
 
          ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/badend.jpg"));
      }
@@ -456,15 +470,18 @@ MainWindow::MainWindow(QWidget *parent)
              nave->hide();
              coraim->hide();
              corazon->hide();
-             for(int i=0;i<listaenemigos_n2.size();i++) //ciclo que recorre toda la lista de fuerzaaereas
+
+             for(int i=0;i<listaenemigos_n2.size();i++)
              {
-                 if(listaenemigos_n2.at(i)->isVisible()) //condicion que pregunta si un fuerzaaerea es visible
+                 if(listaenemigos_n2.at(i)->isVisible())
                  {
-                     scene->removeItem(listaenemigos_n2.at(i)); //remueve los fuerzaaereas visibles
+                     scene->removeItem(listaenemigos_n2.at(i));
                  }
              }
-
-
+            /* musica->stop();
+             musica->setMedia(QUrl("qrc:/n/Musica para el juego/y2mate.com - Bonus Game Win  Donkey Kong Country OST.mp3"));
+             musica->play();
+             */
              ui->graphicsView->setBackgroundBrush(QPixmap(":/Imagenes para el juego/godendi.png"));
 
        }
