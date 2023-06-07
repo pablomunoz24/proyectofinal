@@ -73,12 +73,11 @@ private:
     void escenario2();
     void escenario3();
     void update_score(int s);
-    void victoria();
+
 private slots:
     void on_play_clicked();   //boton jugar
     void on_salir_clicked();   //boton salir
 
-    void inicializarjuego();
 
 
 

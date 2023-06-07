@@ -499,36 +499,4 @@ MainWindow::MainWindow(QWidget *parent)
  }
 
 
-void MainWindow::victoria()
- {
-
-
-
- }
-
- void MainWindow::inicializarjuego()   //inicializar juego si ya habia perdido o ganado
- {
-     if(nivel==1){
-     scene->removeItem(listaenemigos_n2.at(0));
-     scene->removeItem(listaenemigos_n2.at(1));
-     scene->removeItem(listaenemigos_n2.at(2));
-     scene->removeItem(listaenemigos_n2.at(3));
-     scene->removeItem(piratag);
-
-     }
-     if(nivel==2){
-         scene->removeItem(listaenemigos_n2.at(0));
-         scene->removeItem(listaenemigos_n2.at(1));
-         scene->removeItem(listaenemigos_n2.at(2));
-         scene->removeItem(piratag);
-         }
-
-
-    listaenemigos_n2.clear();
-
-     puntajee->setpuntaje(0);
-     escenario1();
- }
-
-
 
